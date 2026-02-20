@@ -1,0 +1,71 @@
+-- ==================================
+-- 1. CREATE EMPLOYEE TABLE
+-- ==================================
+
+CREATE TABLE e16 (
+    empno  NUMBER(20) PRIMARY KEY,
+    basic  NUMBER(20),
+    hra    NUMBER(20),
+    da     NUMBER(20),
+    ded    NUMBER(20),
+    net    NUMBER(20),
+    gross  NUMBER(20)
+);
+
+-- ==================================
+-- 2. INSERT RECORDS (USER INPUT)
+-- ==================================
+
+INSERT INTO e16
+VALUES (&empno, &basic, &hra, &da, &ded, &net, &gross);
+
+-- (Run insert again if needed)
+
+-- ==================================
+-- 3. DISPLAY EMPLOYEE TABLE
+-- ==================================
+
+SELECT * FROM e16;
+
+-- ==================================
+-- 4. CREATE BACKUP TABLE
+-- ==================================
+
+CREATE TABLE backup1 (
+    empno  NUMBER(20),
+    gross  NUMBER(20),
+    net    NUMBER(20)
+);
+
+-- ==================================
+-- 5. CREATE TRIGGER (AFTER UPDATE)
+-- ==================================
+
+CREATE OR REPLACE TRIGGER sal_change
+AFTER UPDATE ON e16
+FOR EACH ROW
+BEGIN
+    INSERT INTO backup1 (empno, gross, net)
+    VALUES (:OLD.empno, :OLD.gross, :OLD.net);
+END;
+/
+
+-- ==================================
+-- 6. UPDATE EMPLOYEE SALARY
+-- ==================================
+
+UPDATE e16
+SET basic = 30000
+WHERE empno = 101;
+
+-- ==================================
+-- 7. VIEW UPDATED TABLE
+-- ==================================
+
+SELECT * FROM e16;
+
+-- ==================================
+-- 8. VIEW BACKUP TABLE
+-- ==================================
+
+SELECT * FROM backup1;
