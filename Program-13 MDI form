@@ -1,0 +1,17 @@
+Public Class MdiParent
+
+Private Sub Forml
+
+Load(ByVal sender As System.Object, ByVal e As System.EventArgs) Handles MyBase.Load
+
+MDIchild1.MdiParent - Me
+
+MDIchild1.Show()
+
+MDIchild2.MdiParent- Me
+
+MDIchild2.Show()
+
+End Sub
+
+End Class
