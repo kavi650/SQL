@@ -1,0 +1,41 @@
+Module Module1
+
+    Sub Main()
+
+        Console.WriteLine("CALLING PROCEDURE")
+        SimpleProcedure()
+
+        Dim x As Integer
+        Dim y As Integer
+
+        Console.WriteLine("ENTER THE VALUE OF X:")
+        x = Convert.ToInt32(Console.ReadLine())
+
+        Console.WriteLine("ENTER THE VALUE OF Y:")
+        y = Convert.ToInt32(Console.ReadLine())
+
+        Console.WriteLine("ADDITION OF TWO VALUES")
+        Addition(x, y)
+
+        Console.WriteLine("THE ABSOLUTE FUNCTION")
+        Console.WriteLine(Math.Abs(-23))
+
+        Console.WriteLine("THE ROUND FUNCTION")
+        Console.WriteLine(Math.Round(34.56))
+
+        Console.WriteLine("Second Computer Science has {0} characters",
+                          Len("Second Computer Science"))
+
+        Console.ReadLine()
+
+    End Sub
+
+    Sub SimpleProcedure()
+        Console.WriteLine("INSIDE PROCEDURE")
+    End Sub
+
+    Sub Addition(ByVal k As Integer, ByVal l As Integer)
+        Console.WriteLine(k + l)
+    End Sub
+
+End Module
