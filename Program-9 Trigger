@@ -1,0 +1,58 @@
+-- ==============================
+-- 1. CREATE TABLES
+-- ==============================
+
+CREATE TABLE employees (
+    employee_id NUMBER,
+    name        VARCHAR2(50),
+    salary      NUMBER
+);
+
+CREATE TABLE emp_log (
+    emp_id      NUMBER,
+    action_date DATE
+);
+
+-- ==============================
+-- 2. BEFORE INSERT TRIGGER
+--    Prevent negative salary
+-- ==============================
+
+CREATE OR REPLACE TRIGGER before_insert_emp
+BEFORE INSERT ON employees
+FOR EACH ROW
+BEGIN
+    IF :NEW.salary < 0 THEN
+        RAISE_APPLICATION_ERROR(-20001, 'Salary cannot be negative');
+    END IF;
+END;
+/
+-- ==============================
+-- 3. AFTER INSERT TRIGGER
+--    Log successful inserts
+-- ==============================
+
+CREATE OR REPLACE TRIGGER after_insert_emp
+AFTER INSERT ON employees
+FOR EACH ROW
+BEGIN
+    INSERT INTO emp_log (emp_id, action_date)
+    VALUES (:NEW.employee_id, SYSDATE);
+END;
+/
+-- ==============================
+-- 4. INSERT DATA
+-- ==============================
+
+INSERT INTO employees VALUES (1, 'Ravi', 25000);
+
+INSERT INTO employees VALUES (2, 'Anu', -5000);
+-- This will raise error: Salary cannot be negative
+
+-- ==============================
+-- 5. VIEW DATA
+-- ==============================
+
+SELECT * FROM employees;
+
+SELECT * FROM emp_log;
