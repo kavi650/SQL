@@ -1,34 +1,56 @@
-create table dept( deptid number(2) constraint dept_pk primary key, deptname varchar(20), loc varchar(10));
+/* CREATE TABLES */
 
-insert into dept values (1,'cs', 'cbe');
+CREATE TABLE department (
+    dept_id NUMBER,
+    dept_name VARCHAR2(20)
+);
 
-insert into dept values(2,'cs', 'cbe');
+CREATE TABLE employee (
+    emp_id NUMBER,
+    emp_name VARCHAR2(20),
+    dept_id NUMBER
+);
 
-insert into dept values(3,'it','che');
+/* INSERT VALUES */
 
-insert into dept values(4,'ct','erd');
+INSERT INTO department VALUES (1,'IT');
+INSERT INTO department VALUES (2,'CSE');
+INSERT INTO department VALUES (3,'ECE');
 
-create table empl(empid NUMBER(4) CONSTRAINT empl_pk PRIMARY KEY, empname varchar(10), deptid NUMBER(2) CONSTRAINT emp_deptid_fk REFERENCES dept(deptid));
+INSERT INTO employee VALUES (101,'Ravi',1);
+INSERT INTO employee VALUES (102,'Anu',2);
+INSERT INTO employee VALUES (103,'Kumar',NULL);
 
-insert into empl values(101,'aa', 1);
+/* INNER JOIN */
 
-insert into empl values(102,'bb',2);
+SELECT e.emp_name, d.dept_name
+FROM employee e
+INNER JOIN department d
+ON e.dept_id = d.dept_id;
 
-insert into empl values(103, 'cc', 1);
+/* LEFT OUTER JOIN */
 
-insert into empl values(104,'dd',3);
+SELECT e.emp_name, d.dept_name
+FROM employee e
+LEFT OUTER JOIN department d
+ON e.dept_id = d.dept_id;
 
-select d.deptname, e.empname from dept d join empl e on d.deptid=e.deptid where 
-d.deptid>2 order by d.deptname;
+/* RIGHT OUTER JOIN */
 
-select d.deptname, e.empname from dept d left outer join empl e on 
-d.deptid= e.deptid where d.deptid>2 order by d.deptname;
+SELECT e.emp_name, d.dept_name
+FROM employee e
+RIGHT OUTER JOIN department d
+ON e.dept_id = d.dept_id;
 
-select d.deptname, e.empname from dept d right outer join empl e on 
-d.deptid=e.deptid where d.deptid>2 order by d.deptname;
+/* FULL OUTER JOIN */
 
-select d.deptname, e.empname from dept d full outer join empl e on 
-d.deptid= e.deptid where d.deptid>2 order by d.deptname;
+SELECT e.emp_name, d.dept_name
+FROM employee e
+FULL OUTER JOIN department d
+ON e.dept_id = d.dept_id;
 
-select d.deptname, e.empname from dept d cross join empl e where d.deptid>2 
-order by d.deptname;
+/* CROSS JOIN */
+
+SELECT e.emp_name, d.dept_name
+FROM employee e
+CROSS JOIN department d;
