@@ -1,34 +1,28 @@
-CREATE TABLE exe6 (
-  id NUMBER(10),
-  fname VARCHAR2(15),
-  lname VARCHAR2(15),
-  email VARCHAR2(30),
-  hiredate DATE,
-  jobid VARCHAR2(10),
-  salary NUMBER(10),
-  mid NUMBER(5),
-  deptid NUMBER(5)
+CREATE TABLE employee(
+  emp_id NUMBER PRIMARY KEY,
+  emp_name VARCHAR(20) NOT NULL,
+  items VARCHAR(20),
+  price NUMBER
 );
-INSERT INTO exe6 VALUES 
-(761,'deepika','balu','deepabalu2005@gmail.com',
- TO_DATE('05-11-2005','DD-MM-YYYY'),'ap',70000,123,12);
 
-INSERT INTO exe6 VALUES 
-(763,'madhu','hasini','medhunhasini2014@gmail.com',
- TO_DATE('12-03-2014','DD-MM-YYYY'),'ap',70000,124,12);
+INSERT INTO employee VALUES (121,'kavi','books',1899);
+INSERT INTO employee VALUES (123,'raj','bike',289999);
+INSERT INTO employee VALUES (124,'arun','phone',15000);
+INSERT INTO employee VALUES (125,'siva','laptop',60000);
 
-INSERT INTO exe6 VALUES 
-(765,'jeen','mersaline','jeenmersaline2002@gmail.com',
- TO_DATE('10-01-2002','DD-MM-YYYY'),'HOD',100000,NULL,12);
+SELECT * FROM employee;
 
-INSERT INTO exe6 VALUES 
-(767,'sambath','kumar','sambathkumar2004@gmail.com',
- TO_DATE('04-12-2004','DD-MM-YYYY'),'HOD',100000,NULL,15);
+-- Subquery 1: Employee with maximum price
+SELECT emp_name, price
+FROM employee
+WHERE price = (SELECT MAX(price) FROM employee);
 
-INSERT INTO exe6 VALUES 
-(769,'nandhini','mam','nandhini2011@gmail.com',
- TO_DATE('09-10-2011','DD-MM-YYYY'),'ap',60000,125,15);
+-- Subquery 2: Employee with minimum price
+SELECT emp_name, price
+FROM employee
+WHERE price = (SELECT MIN(price) FROM employee);
 
-INSERT INTO exe6 VALUES 
-(721,'siva','kumar','sivakumar2016@gmail.com',
- TO_DATE('08-05-2016','DD-MM-YYYY'),'ap',65000,126,15);
+-- Subquery 5: Employee having same item as 'kavi'
+SELECT emp_name, items
+FROM employee
+WHERE items = (SELECT items FROM employee WHERE emp_name='kavi');
